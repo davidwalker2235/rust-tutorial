@@ -1,32 +1,37 @@
-fn type_of<T>(_: &T) -> &'static str {
-    std::any::type_name::<T>()
-}
+use std::env::args;
 
 fn main() {
+let mut args: Vec<String> = args().collect();
 
-    println!("Convertir tipo de datos &str a String:\n");
+args.remove(0);
 
-    let data_str: &str = "Hola mundo";
-    println!("el tipo de datos de data_str es: {:?}", type_of(&data_str));
-    let data_string = data_str.to_string();
-    println!("el tipo de datos de data_str es: {:?}", type_of(&data_string));
+for i in &args {
+    if i.len() > 2 {
+        let parametro = &i[..2];
+        let valor = &i[3..];
+        match parametro {
+            "-t" => println!("Argumento Time: {:?}, {:?}", parametro, valor),
+            "-o" => println!("Argumento Time: {:?}, {:?}", parametro, valor),
+            "-i" => funcion_i(),
+             _ => println!("[ERROR], no existe el parámetro"),
+        }
+    }
+    else {
+        if i.contains("-h") {
+            println!("Ayuda de parámetros");
+            println!("-t:[numero entero]");
+            println!("-o:[output]");
+            println!("-i:[input]");
+        }
+        else {
+            println!("Error en parámetro. Escriba -h para ayuda");
+        }
+    }
 
-    println!("\nConvertir tipo de datos String a &str:\n");
-    let string = "hola que tal".to_owned();
-    println!("el tipo de datos de string es: {:?}", type_of(&string));
-    let str_chad = string.as_str();
-    println!("ahora el tipo de datos de string es: {:?}", type_of(&str_chad));
+    fn funcion_i () {
+        println!("se ejecula la función i");
+    }
+}
+    
 
-    println!("\nConvertir tipo de datos String a int:\n");
-    let number = "100".to_owned();
-    println!("El tipo de datos de number es: {:?}", type_of(&number));
-    let conversion: i32 = number.parse().expect("no es un INT");
-    println!("ahora el tipo de datos de number es: {:?}", type_of(&conversion));
-
-    println!("\nConvertir tipo float a int:\n");
-    let float: f64 = 100.5;
-    println!("El tipo de datos de float es: {:?}", type_of(&float));
-    let conversion_int: i32 = float.round() as i32;
-    println!("ahora el tipo de datos de float es: {:?}", type_of(&conversion_int));
-    println!("el float es: {:?}", &conversion_int);
 }
