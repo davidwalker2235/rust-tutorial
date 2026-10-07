@@ -4,5 +4,6 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+numsep = "0.1.12"
 os_info = "3.15.0"
 rand = "0.10.2"

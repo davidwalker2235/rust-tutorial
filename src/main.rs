@@ -1,37 +1,31 @@
-use std::env::args;
+use std::io::stdin;
 
+const SALIR: &str = "salir";
 fn main() {
-let mut args: Vec<String> = args().collect();
-
-args.remove(0);
-
-for i in &args {
-    if i.len() > 2 {
-        let parametro = &i[..2];
-        let valor = &i[3..];
-        match parametro {
-            "-t" => println!("Argumento Time: {:?}, {:?}", parametro, valor),
-            "-o" => println!("Argumento Time: {:?}, {:?}", parametro, valor),
-            "-i" => funcion_i(),
-             _ => println!("[ERROR], no existe el parámetro"),
-        }
-    }
-    else {
-        if i.contains("-h") {
-            println!("Ayuda de parámetros");
-            println!("-t:[numero entero]");
-            println!("-o:[output]");
-            println!("-i:[input]");
+    let mut palabra = String::new();
+    let mut palabra_deletreada = String::new();
+    let mut continuar: bool = true;
+    println!("Deletrear palabra");
+    println!("-----------------");
+    println!("\n");
+    while continuar {
+        println!("Escriba la palabra:");
+        palabra.clear();
+        stdin().read_line(&mut palabra).expect("Error leyendo la palabra");
+        let palabra_limpia = palabra.trim();
+        if palabra_limpia == SALIR {
+            println!("Adiós...");
+            continuar = false
         }
         else {
-            println!("Error en parámetro. Escriba -h para ayuda");
+            for letra in palabra_limpia.chars() {
+            palabra_deletreada.push_str(&format!("{}-", letra));
         }
-    }
+        }
 
-    fn funcion_i () {
-        println!("se ejecula la función i");
+        println!("{palabra_deletreada}");
+        palabra_deletreada.clear();
+        if palabra_limpia == SALIR {continuar = false};
     }
 }
-    
 
-}
